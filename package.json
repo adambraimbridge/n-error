@@ -1,5 +1,5 @@
 {
-  "name": "n-error",
+  "name": "@financial-times/n-error",
   "version": "1.0.0",
   "main": "dist/index.js",
   "repository": "git@github.com:Financial-Times/n-error.git",

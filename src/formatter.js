@@ -1,6 +1,4 @@
-import 'isomorphic-fetch';
-import fetch from 'node-fetch';
-
+import { isFetchResponseError, isFetchNetworkError } from './checker';
 import { CATEGORIES } from './constants';
 
 // parse the response error based on content-type text/html, text/plain or application/json
@@ -35,11 +33,11 @@ export const formatFetchNetworkError = e => ({
 });
 
 export const formatFetchError = async e => {
-	if (e instanceof fetch.Response || e instanceof Response) {
+	if (isFetchResponseError(e)) {
 		const formattedError = await formatFetchResponseError(e);
 		return formattedError;
 	}
-	if (e instanceof fetch.FetchError) {
+	if (isFetchNetworkError(e)) {
 		return formatFetchNetworkError(e);
 	}
 	return e; // uncaught exception

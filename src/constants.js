@@ -6,8 +6,8 @@ export const CATEGORIES = {
 	CUSTOM_ERROR: 'CUSTOM_ERROR',
 };
 
-// HTTP status code
 // http://www.restapitutorial.com/httpstatuscodes.html
+// implement popular HTTP status code
 export const ERROR_STATUS_TEXT_MAP = {
 	'400': 'BAD_REQUEST',
 	'401': 'UNAUTHORISED',

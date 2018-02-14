@@ -15,6 +15,10 @@
     "commitmsg": "node_modules/.bin/secret-squirrel-commitmsg",
     "prepush": "make verify -j3"
   },
+  "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
+    "node-fetch": "^2.0.0"
+  },
   "devDependencies": {
     "@financial-times/n-gage": "^1.19.3",
     "babel-cli": "^6.26.0",

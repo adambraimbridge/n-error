@@ -6,12 +6,22 @@ export const CATEGORIES = {
 	CUSTOM_ERROR: 'CUSTOM_ERROR',
 };
 
-export const RESULTS = {
-	SUCCESS: 'success',
-	FAILURE: 'failure',
+// HTTP status code
+// http://www.restapitutorial.com/httpstatuscodes.html
+export const ERROR_STATUS_TEXT_MAP = {
+	'400': 'BAD_REQUEST',
+	'401': 'UNAUTHORISED',
+	'403': 'FORBIDDEN',
+	'404': 'NOT_FOUND',
+	'408': 'REQUEST_TIMEOUT',
+	'409': 'CONFLICT',
+	'500': 'INTERNAL_SERVER_ERROR',
+	'502': 'BAD_GATEWAY',
+	'503': 'SERVICE_UNAVAILABLE',
+	'504': 'GATEWAY_TIMEOUT',
 };
 
 export default {
 	CATEGORIES,
-	RESULTS,
+	ERROR_STATUS_TEXT_MAP,
 };

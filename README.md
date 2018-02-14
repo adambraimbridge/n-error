@@ -1,1 +1,1 @@
-# n-error
+# n-error [![CircleCI](https://circleci.com/gh/Financial-Times/n-error.svg?style=svg)](https://circleci.com/gh/Financial-Times/n-error) [![Coverage Status](https://coveralls.io/repos/github/Financial-Times/n-error/badge.svg?branch=master)](https://coveralls.io/github/Financial-Times/n-error?branch=master)

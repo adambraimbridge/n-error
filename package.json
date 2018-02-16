@@ -6,7 +6,7 @@
   "author": "Zhenyu Lin<zhenyu.lin@ft.com>",
   "license": "MIT",
   "scripts": {
-  	"lint": "eslint src",
+    "lint": "eslint src",
     "watch": "nodemon --watch src -q --exec 'eslint src --fix'",
     "test": "jest",
     "cover": "jest --coverage",
@@ -16,6 +16,7 @@
     "prepush": "make verify -j3"
   },
   "dependencies": {
+    "camelcase": "^4.1.0",
     "isomorphic-fetch": "^2.2.1",
     "node-fetch": "^2.0.0"
   },

@@ -1,41 +1,47 @@
-import { ERROR_STATUS_TEXT_MAP } from './constants';
+import camelcase from 'camelcase';
 
-const errorObjectCreator = status => (meta = {}) => ({
-	status,
-	type: ERROR_STATUS_TEXT_MAP[status],
-	...meta,
-});
+// http://www.restapitutorial.com/httpstatuscodes.html
+// implement popular HTTP status code
+export const ERROR_STATUS_TEXT_MAP = {
+	'400': 'BAD_REQUEST',
+	'401': 'UNAUTHORISED',
+	// '402': 'PAYMENT_REQUIRED',
+	'403': 'FORBIDDEN',
+	'404': 'NOT_FOUND',
+	// '405': 'METHOD_NOT_ALLOWED',
+	// '406': 'NOT_ACCEPTABLE',
+	// '407': 'PROXY_AUTHENTICATION_REQUIRED',
+	'408': 'REQUEST_TIMEOUT',
+	'409': 'CONFLICT',
+	'500': 'INTERNAL_SERVER_ERROR',
+	// '501': 'NOT_IMPLEMENTED',
+	'502': 'BAD_GATEWAY',
+	'503': 'SERVICE_UNAVAILABLE',
+	'504': 'GATEWAY_TIMEOUT',
+};
 
-const badRequest = errorObjectCreator(400);
-const unauthorised = errorObjectCreator(401);
-const forbidden = errorObjectCreator(403);
-const notFound = errorObjectCreator(404);
-const requestTimeout = errorObjectCreator(408);
-const conflict = errorObjectCreator(409);
-const internalServerError = errorObjectCreator(500);
-const badGateway = errorObjectCreator(502);
-const serviceUnavailable = errorObjectCreator(503);
-const gatewayTimeout = errorObjectCreator(504);
-
-export const errorOfStatus = status => meta => {
-	const statusString = parseInt(status, 10);
-	if (
-		Object.prototype.hasOwnProperty.call(ERROR_STATUS_TEXT_MAP, statusString)
-	) {
-		return errorObjectCreator(status)(meta);
+export class CustomError extends Error {
+	constructor(fields) {
+		super(fields.message);
+		Object.keys(fields).forEach(key => {
+			this[key] = fields[key];
+		});
 	}
-	return errorObjectCreator(500)(meta);
-};
+}
 
-export default {
-	badRequest,
-	unauthorised,
-	forbidden,
-	notFound,
-	requestTimeout,
-	conflict,
-	internalServerError,
-	badGateway,
-	serviceUnavailable,
-	gatewayTimeout,
-};
+export const errorOfStatus = status => meta =>
+	new CustomError({
+		status: Number(status),
+		type: ERROR_STATUS_TEXT_MAP[status] || 'UNCOMMON_ERROR_TYPE',
+		...meta,
+	});
+
+const nError = Object.entries(ERROR_STATUS_TEXT_MAP).reduce(
+	(errors, [status, type]) => ({
+		...errors,
+		[camelcase(type)]: errorOfStatus(status),
+	}),
+	{},
+);
+
+export default nError;

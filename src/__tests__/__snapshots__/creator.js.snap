@@ -6,10 +6,10 @@ Object {
 }
 `;
 
-exports[`errorOfStatus create error with UNCOMMON_ERROR_TYPE in case of uncommon status code 1`] = `[Error: some error message]`;
+exports[`errorCreatorOfStatus create error with UNCOMMON_ERROR_TYPE in case of uncommon status code 1`] = `[Error: some error message]`;
 
-exports[`errorOfStatus create the correct error of number status code 1`] = `[Error: some error message]`;
+exports[`errorCreatorOfStatus create the correct error of number status code 1`] = `[Error: some error message]`;
 
-exports[`errorOfStatus create the correct error of status code string 1`] = `[Error: some error message]`;
+exports[`errorCreatorOfStatus create the correct error of status code string 1`] = `[Error: some error message]`;
 
 exports[`nError create the correct error by its method named after error type in camelCase 1`] = `[Error: some error message]`;

@@ -29,19 +29,18 @@ export class CustomError extends Error {
 	}
 }
 
-export const errorOfStatus = status => meta =>
+export const createCustomError = fields => new CustomError(fields);
+
+export const errorCreatorOfStatus = status => meta =>
 	new CustomError({
 		status: Number(status),
-		type: ERROR_STATUS_TEXT_MAP[status] || 'UNCOMMON_ERROR_TYPE',
 		...meta,
 	});
 
-const nError = Object.entries(ERROR_STATUS_TEXT_MAP).reduce(
-	(errors, [status, type]) => ({
+export default Object.entries(ERROR_STATUS_TEXT_MAP).reduce(
+	(errors, [status, statusText]) => ({
 		...errors,
-		[camelcase(type)]: errorOfStatus(status),
+		[camelcase(statusText)]: errorCreatorOfStatus(status),
 	}),
 	{},
 );
-
-export default nError;

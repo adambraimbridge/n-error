@@ -1,7 +1,7 @@
 import nError, {
 	ERROR_STATUS_TEXT_MAP,
 	CustomError,
-	errorOfStatus,
+	errorCreatorOfStatus,
 } from '../creator';
 
 describe('ERROR_STATUS_TEXT_MAP', () => {
@@ -39,23 +39,22 @@ describe('CustomError', () => {
 	// });
 });
 
-describe('errorOfStatus', () => {
+describe('errorCreatorOfStatus', () => {
 	it('create the correct error of number status code', () => {
-		const e = errorOfStatus(404)({ message: 'some error message' });
+		const e = errorCreatorOfStatus(404)({ message: 'some error message' });
 		expect(e.status).toBe(404);
 		expect(e).toMatchSnapshot();
 	});
 
 	it('create the correct error of status code string', () => {
-		const e = errorOfStatus('404')({ message: 'some error message' });
+		const e = errorCreatorOfStatus('404')({ message: 'some error message' });
 		expect(e.status).toBe(404);
 		expect(e).toMatchSnapshot();
 	});
 
 	it('create error with UNCOMMON_ERROR_TYPE in case of uncommon status code', () => {
-		const e = errorOfStatus(442)({ message: 'some error message' });
+		const e = errorCreatorOfStatus(442)({ message: 'some error message' });
 		expect(e.status).toBe(442);
-		expect(e.type).toBe('UNCOMMON_ERROR_TYPE');
 		expect(e).toMatchSnapshot();
 	});
 });

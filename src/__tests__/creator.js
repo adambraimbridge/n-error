@@ -3,6 +3,7 @@ import nError, {
 	CustomError,
 	errorCreatorOfStatus,
 } from '../creator';
+import { assertError } from '../utils';
 
 describe('ERROR_STATUS_TEXT_MAP', () => {
 	it('accessible via key name as number', () => {
@@ -19,11 +20,7 @@ describe('ERROR_STATUS_TEXT_MAP', () => {
 describe('CustomError', () => {
 	it('create an Error with extended fields correctly', () => {
 		const e = new CustomError({ message: 'some message', foo: 'bar' });
-		expect(e instanceof Error).toBe(true);
-		const { message, stack, ...custom } = e;
-		expect(stack).toBeDefined();
-		expect(message).toBe('some message');
-		expect(custom).toMatchSnapshot();
+		assertError(e);
 	});
 
 	// it('create an ExtendedError with action setter', () => {

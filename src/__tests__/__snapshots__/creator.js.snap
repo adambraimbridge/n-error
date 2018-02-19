@@ -3,6 +3,7 @@
 exports[`CustomError create an Error with extended fields correctly 1`] = `
 Object {
   "foo": "bar",
+  "message": "some message",
 }
 `;
 

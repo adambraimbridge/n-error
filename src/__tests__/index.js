@@ -1,5 +1,5 @@
 import nError, {
-	formatFetchError,
+	parseFetchError,
 	isFetchError,
 	createCustomError,
 } from '../index';
@@ -10,9 +10,9 @@ describe('nError', () => {
 	});
 });
 
-describe('formatFetchError', () => {
+describe('parseFetchError', () => {
 	it('exported correctly', () => {
-		expect(typeof formatFetchError).toBe('function');
+		expect(typeof parseFetchError).toBe('function');
 	});
 });
 

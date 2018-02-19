@@ -37,10 +37,10 @@ export const errorCreatorOfStatus = status => meta =>
 		...meta,
 	});
 
-export default Object.entries(ERROR_STATUS_TEXT_MAP).reduce(
-	(errors, [status, statusText]) => ({
+export default Object.keys(ERROR_STATUS_TEXT_MAP).reduce(
+	(errors, status) => ({
 		...errors,
-		[camelcase(statusText)]: errorCreatorOfStatus(status),
+		[camelcase(ERROR_STATUS_TEXT_MAP[status])]: errorCreatorOfStatus(status),
 	}),
 	{},
 );

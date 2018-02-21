@@ -29,16 +29,15 @@ export class NError extends Error {
 	}
 }
 
-export const createNError = fields => new NError(fields);
+const nError = fields => new NError(fields);
 
-export default Object.keys(ERROR_STATUS_TEXT_MAP).reduce(
-	(errors, status) => ({
-		...errors,
-		[camelcase(ERROR_STATUS_TEXT_MAP[status])]: meta =>
-			createNError({
-				status: Number(status),
-				...meta,
-			}),
-	}),
-	{},
-);
+Object.keys(ERROR_STATUS_TEXT_MAP).forEach(status => {
+	const methodName = camelcase(ERROR_STATUS_TEXT_MAP[status]);
+	nError[methodName] = meta =>
+		nError({
+			status: Number(status),
+			...meta,
+		});
+});
+
+export default nError;

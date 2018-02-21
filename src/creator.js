@@ -1,5 +1,7 @@
 import camelcase from 'camelcase';
 
+import { removeObjectKeys } from './utils';
+
 // http://www.restapitutorial.com/httpstatuscodes.html
 // implement popular HTTP status code
 export const ERROR_STATUS_TEXT_MAP = {
@@ -31,6 +33,10 @@ export class NError extends Error {
 			Object.keys(input).forEach(key => {
 				this[key] = input[key];
 			});
+		};
+
+		this.remove = input => {
+			removeObjectKeys(this)(input);
 		};
 
 		this.toUser = input => {

@@ -5,6 +5,7 @@ Object {
   "extend": [Function],
   "foo": "bar",
   "message": "some message",
+  "remove": [Function],
   "setHandler": [Function],
   "toUser": [Function],
 }

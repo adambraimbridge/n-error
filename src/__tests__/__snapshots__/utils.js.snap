@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`removeObjectKeys throw error if keys input is not an array or string 1`] = `"keys need to be formatted in [string] or non-empty string"`;

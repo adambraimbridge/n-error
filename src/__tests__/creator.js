@@ -65,6 +65,12 @@ describe('nError', () => {
 			expect(e.next).toBe('TEST');
 		});
 
+		it('create an ExtendedError with remove()', () => {
+			const e = nError({ message: 'some message', test: 'test' });
+			e.remove('test');
+			expect(e.test).toBeUndefined();
+		});
+
 		it('create an ExtendedError with toUser()', () => {
 			const e = nError({ message: 'some message' });
 			e.toUser({ message: 'some other message' });

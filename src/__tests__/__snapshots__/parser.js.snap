@@ -4,8 +4,11 @@ exports[`parseFetchError format isomorphic-fetch response error correctly 1`] = 
 Object {
   "category": "FETCH_RESPONSE_ERROR",
   "contentType": "text/plain; charset=utf-8",
+  "extend": [Function],
   "message": "403 Forbidden",
+  "setHandler": [Function],
   "status": 403,
+  "toUser": [Function],
 }
 `;
 
@@ -13,7 +16,10 @@ exports[`parseFetchError format network error correctly 1`] = `
 Object {
   "category": "FETCH_NETWORK_ERROR",
   "code": "MOCKED_FETCH_NETWORK_ERROR_CODE",
+  "extend": [Function],
   "message": "mocked fetch network error",
+  "setHandler": [Function],
+  "toUser": [Function],
 }
 `;
 
@@ -21,8 +27,11 @@ exports[`parseFetchError format node-fetch response error correctly 1`] = `
 Object {
   "category": "FETCH_RESPONSE_ERROR",
   "contentType": "text/plain; charset=utf-8",
+  "extend": [Function],
   "message": "403 Forbidden",
+  "setHandler": [Function],
   "status": 403,
+  "toUser": [Function],
 }
 `;
 
@@ -30,7 +39,10 @@ exports[`parseFetchNetworkError format network error correctly 1`] = `
 Object {
   "category": "FETCH_NETWORK_ERROR",
   "code": "MOCKED_FETCH_NETWORK_ERROR_CODE",
+  "extend": [Function],
   "message": "mocked fetch network error",
+  "setHandler": [Function],
+  "toUser": [Function],
 }
 `;
 
@@ -38,11 +50,14 @@ exports[`parseFetchResponseError format error in application/json contentType co
 Object {
   "category": "FETCH_RESPONSE_ERROR",
   "contentType": "application/json; charset=utf-8",
+  "extend": [Function],
   "message": Object {
     "document": "some url",
     "message": "some message",
   },
+  "setHandler": [Function],
   "status": 404,
+  "toUser": [Function],
 }
 `;
 
@@ -50,8 +65,11 @@ exports[`parseFetchResponseError format error in text/html contentType correctly
 Object {
   "category": "FETCH_RESPONSE_ERROR",
   "contentType": "text/html; charset=utf-8",
+  "extend": [Function],
   "message": "<html></html>",
+  "setHandler": [Function],
   "status": 404,
+  "toUser": [Function],
 }
 `;
 
@@ -59,8 +77,11 @@ exports[`parseFetchResponseError format error in text/plain contentType correctl
 Object {
   "category": "FETCH_RESPONSE_ERROR",
   "contentType": "text/plain; charset=utf-8",
+  "extend": [Function],
   "message": "403 Forbidden",
+  "setHandler": [Function],
   "status": 403,
+  "toUser": [Function],
 }
 `;
 

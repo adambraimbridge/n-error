@@ -26,9 +26,25 @@ export class NError extends Error {
 		Object.keys(fields).forEach(key => {
 			this[key] = fields[key];
 		});
+
+		this.extend = input => {
+			Object.keys(input).forEach(key => {
+				this[key] = input[key];
+			});
+		};
+
+		this.toUser = input => {
+			this.user = input;
+		};
+
+		this.setHandler = input => {
+			this.handler = input;
+		};
 	}
 }
 
+// TODO: a creator that maintains instanceof Error, and .stack
+// but of an independent constructor that can be rest spreaded
 const nError = fields => new NError(fields);
 
 Object.keys(ERROR_STATUS_TEXT_MAP).forEach(status => {

@@ -1,10 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`NError create an Error with extended fields correctly 1`] = `
+exports[`nError create NError create an Error with extended fields correctly 1`] = `
 Object {
+  "extend": [Function],
   "foo": "bar",
   "message": "some message",
+  "setHandler": [Function],
+  "toUser": [Function],
 }
 `;
 
-exports[`nError create the correct error by its method named after error type in camelCase 1`] = `[Error: some error message]`;
+exports[`nError has methods to create error with status named after error type in camelCase 1`] = `[Error: some error message]`;

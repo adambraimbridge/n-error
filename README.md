@@ -13,12 +13,23 @@ standardise custom Error object and error handling, logger compliant
 import nError from '@financial-times/n-error';
 
 throw nError.notFound({ message: 'sessionId not found' });
-
+```
+```js
 catch (e) {
-  throw nError({ 
-    ...e, // TODO: a good way to extend the error object, or support rest spread
+  throw e.extend({
+    type: 'SOME_ERROR_TYPE',
     user: { status: 403, message: 'You need to login.' },
     next: 'REDIRECT_TO_INDEX',
+  }).remove('message');
+}
+```
+```js
+catch (e) {
+  throw Object.assign(e, { 
+    type: 'SOME_ERROR_TYPE',
+    user: { status: 403, message: 'You need to login.' },
+    next: 'REDIRECT_TO_INDEX',
+    message: undefined,
   });
 }
 ```
@@ -65,10 +76,10 @@ try {
 } catch (e) {
   event.failure(e);
   if(e.catogary === 'FETCH_NETWORK_ERROR'){
-    return next({
-      status: 500,
-      user: { message: e.message }
+    const ee = e.toUser({
+      user: { status: 500, message: e.message }
     })
+    return next(ee)
   }
   return next(e);
 }

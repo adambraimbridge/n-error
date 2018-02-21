@@ -1,8 +1,4 @@
-import nError, {
-	ERROR_STATUS_TEXT_MAP,
-	CustomError,
-	errorCreatorOfStatus,
-} from '../creator';
+import nError, { ERROR_STATUS_TEXT_MAP, NError } from '../creator';
 import { assertError } from '../utils';
 
 describe('ERROR_STATUS_TEXT_MAP', () => {
@@ -17,43 +13,23 @@ describe('ERROR_STATUS_TEXT_MAP', () => {
 	});
 });
 
-describe('CustomError', () => {
+describe('NError', () => {
 	it('create an Error with extended fields correctly', () => {
-		const e = new CustomError({ message: 'some message', foo: 'bar' });
+		const e = new NError({ message: 'some message', foo: 'bar' });
 		assertError(e);
 	});
 
 	// it('create an ExtendedError with action setter', () => {
-	// 	const e = new CustomError({ message: 'some message' });
+	// 	const e = new NError({ message: 'some message' });
 	// 	e.setAction('SOME_ACTION_TYPE');
 	// 	expect(e.action).toBe('SOME_ACTION_TYPE');
 	// });
 
 	// it('maintains the prototype with Object rest spread', () => {
-	// 	const e = new CustomError({ message: 'some message' });
+	// 	const e = new NError({ message: 'some message' });
 	// 	const ee = { ...e, action: 'SOME_ACTION_TYPE' };
 	// 	expect(ee instanceof Error).toBe(true);
 	// });
-});
-
-describe('errorCreatorOfStatus', () => {
-	it('create the correct error of number status code', () => {
-		const e = errorCreatorOfStatus(404)({ message: 'some error message' });
-		expect(e.status).toBe(404);
-		expect(e).toMatchSnapshot();
-	});
-
-	it('create the correct error of status code string', () => {
-		const e = errorCreatorOfStatus('404')({ message: 'some error message' });
-		expect(e.status).toBe(404);
-		expect(e).toMatchSnapshot();
-	});
-
-	it('create error with UNCOMMON_ERROR_TYPE in case of uncommon status code', () => {
-		const e = errorCreatorOfStatus(442)({ message: 'some error message' });
-		expect(e.status).toBe(442);
-		expect(e).toMatchSnapshot();
-	});
 });
 
 describe('nError', () => {

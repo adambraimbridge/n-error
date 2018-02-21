@@ -20,7 +20,7 @@ export const ERROR_STATUS_TEXT_MAP = {
 	'504': 'GATEWAY_TIMEOUT',
 };
 
-export class CustomError extends Error {
+export class NError extends Error {
 	constructor(fields) {
 		super(fields.message);
 		Object.keys(fields).forEach(key => {
@@ -29,18 +29,16 @@ export class CustomError extends Error {
 	}
 }
 
-export const createCustomError = fields => new CustomError(fields);
-
-export const errorCreatorOfStatus = status => meta =>
-	new CustomError({
-		status: Number(status),
-		...meta,
-	});
+export const createNError = fields => new NError(fields);
 
 export default Object.keys(ERROR_STATUS_TEXT_MAP).reduce(
 	(errors, status) => ({
 		...errors,
-		[camelcase(ERROR_STATUS_TEXT_MAP[status])]: errorCreatorOfStatus(status),
+		[camelcase(ERROR_STATUS_TEXT_MAP[status])]: meta =>
+			createNError({
+				status: Number(status),
+				...meta,
+			}),
 	}),
 	{},
 );

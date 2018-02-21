@@ -1,5 +1,5 @@
 import { isFetchResponseError, isFetchNetworkError } from './checker';
-import { createCustomError } from './creator';
+import { createNError } from './creator';
 import { CATEGORIES } from './constants';
 
 // parse the response error based on content-type text/html, text/plain or application/json
@@ -19,7 +19,7 @@ export const parseFetchResponseError = async response => {
 	const parseMethod =
 		contentType && contentType.includes('application/json') ? 'json' : 'text';
 	const message = await response[parseMethod](); // system Error would be thrown if it fails
-	return createCustomError({
+	return createNError({
 		category: CATEGORIES.FETCH_RESPONSE_ERROR,
 		contentType,
 		status,
@@ -28,7 +28,7 @@ export const parseFetchResponseError = async response => {
 };
 
 export const parseFetchNetworkError = e =>
-	createCustomError({
+	createNError({
 		category: CATEGORIES.FETCH_NETWORK_ERROR,
 		message: e.message,
 		code: e.code,

@@ -13,6 +13,32 @@ describe('ERROR_STATUS_TEXT_MAP', () => {
 	});
 });
 
+// describe('LoggerStandardError', () => {
+// 	it('creates an object instance of Error with .stack', () => {
+// 		const e = LoggerStandardError({ message: 'test' });
+// 		expect(e instanceof LoggerStandardError).toBe(true);
+// 		expect(e instanceof Error).toBe(true);
+// 		expect(e.stack).toBeDefined();
+// 		expect(e.stack.length).toBeGreaterThan(0);
+// 	});
+
+// 	it('exposes all fileds including stack in Object.assign', () => {
+// 		const basic = { message: 'test', a: 'a', b: 'b' };
+// 		const e = LoggerStandardError(basic);
+// 		const ee = Object.assign(e, { c: 'c' });
+// 		expect(ee).toEqual({ ...basic, c: 'c' });
+// 		expect(ee.stack.length).toBeGreaterThan(0);
+// 	});
+
+// 	// it('exposes all fileds including stack in rest spread', () => {
+// 	// 	const basic = { message: 'test', a: 'a', b: 'b' };
+// 	// 	const e = LoggerStandardError(basic);
+// 	// 	const ee = { ...e, c: 'c' };
+// 	// 	expect(ee).toEqual({ ...basic, c: 'c' });
+// 	// 	expect(ee.stack.length).toBeGreaterThan(0);
+// 	// });
+// });
+
 describe('nError', () => {
 	describe('has methods', () => {
 		it('to create error with status named after error type in camelCase', () => {
@@ -49,6 +75,12 @@ describe('nError', () => {
 			const e = nError({ message: 'some message' });
 			e.setHandler('REDIRECT_TO_INDEX');
 			expect(e.handler).toBe('REDIRECT_TO_INDEX');
+		});
+
+		it('maintains native Error fields with Object.assign()', () => {
+			const e = nError({ message: 'some message' });
+			const ee = Object.assign(e, { action: 'SOME_ACTION' });
+			expect(ee.message).toBe('some message');
 		});
 
 		// it('maintains native Error fields with rest spread', () => {

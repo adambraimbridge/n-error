@@ -43,9 +43,21 @@ export class NError extends Error {
 	}
 }
 
-// TODO: a creator that maintains instanceof Error, and .stack
-// but of an independent constructor that can be rest spreaded
 const nError = fields => new NError(fields);
+
+// TODO: .stack rest spread support from babel
+// export function LoggerStandardError(fields) {
+// 	if (!(this instanceof LoggerStandardError)) {
+// 		return new LoggerStandardError(fields);
+// 	}
+// 	Object.keys(fields).forEach(key => {
+// 		this[key] = fields[key];
+// 	});
+// 	Error.captureStackTrace(this, LoggerStandardError);
+// 	return this;
+// }
+
+// LoggerStandardError.prototype = Error.prototype;
 
 Object.keys(ERROR_STATUS_TEXT_MAP).forEach(status => {
 	const methodName = camelcase(ERROR_STATUS_TEXT_MAP[status]);

@@ -2,6 +2,12 @@
 
 standardise custom Error object and error handling, logger compliant
 
+- [creator](#creator)
+- [error handling patterns](#error-handling-patterns)
+  * [source of errors](#source-of-errors)
+  * [fetch error parser](#fetch-error-parser)
+  * [error handling](#error-handling)
+
 ## creator
 ```js
 import nError, { createNError } from '@financial-times/n-error';

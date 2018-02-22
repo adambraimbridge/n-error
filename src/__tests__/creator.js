@@ -1,5 +1,4 @@
 import nError, { ERROR_STATUS_TEXT_MAP } from '../creator';
-import { assertError } from '../utils';
 
 describe('ERROR_STATUS_TEXT_MAP', () => {
 	it('accessible via key name as number', () => {
@@ -13,35 +12,57 @@ describe('ERROR_STATUS_TEXT_MAP', () => {
 	});
 });
 
-// describe('LoggerStandardError', () => {
-// 	it('creates an object instance of Error with .stack', () => {
-// 		const e = LoggerStandardError({ message: 'test' });
-// 		expect(e instanceof LoggerStandardError).toBe(true);
-// 		expect(e instanceof Error).toBe(true);
-// 		expect(e.stack).toBeDefined();
-// 		expect(e.stack.length).toBeGreaterThan(0);
-// 	});
-
-// 	it('exposes all fileds including stack in Object.assign', () => {
-// 		const basic = { message: 'test', a: 'a', b: 'b' };
-// 		const e = LoggerStandardError(basic);
-// 		const ee = Object.assign(e, { c: 'c' });
-// 		expect(ee).toEqual({ ...basic, c: 'c' });
-// 		expect(ee.stack.length).toBeGreaterThan(0);
-// 	});
-
-// 	// it('exposes all fileds including stack in rest spread', () => {
-// 	// 	const basic = { message: 'test', a: 'a', b: 'b' };
-// 	// 	const e = LoggerStandardError(basic);
-// 	// 	const ee = { ...e, c: 'c' };
-// 	// 	expect(ee).toEqual({ ...basic, c: 'c' });
-// 	// 	expect(ee.stack.length).toBeGreaterThan(0);
-// 	// });
-// });
-
 describe('nError', () => {
-	describe('has methods', () => {
-		it('to create error with status named after error type in camelCase', () => {
+	describe('is a constructor function creates nError instance', () => {
+		it('with .stack to trace the callStack', () => {
+			const e = nError({
+				message: 'some message',
+				type: 'SOME_TYPE',
+			});
+			expect(e instanceof nError).toBe(true);
+			// expect(e instanceof Error).toBe(true);
+			expect(e.stack.length).toBeGreaterThan(0);
+			expect(e).toMatchSnapshot();
+		});
+
+		it('exposes all fileds including .stack in Object.assign', () => {
+			const e = nError({ message: 'test', a: 'a', b: 'b' });
+			const ee = Object.assign(e, { c: 'c' });
+			expect(ee.stack.length).toBeGreaterThan(0);
+			expect(ee).toMatchSnapshot();
+		});
+
+		// it('exposes all fileds including stack in rest spread', () => {
+		// 	const basic = { message: 'test', a: 'a', b: 'b' };
+		// 	const e = nError(basic);
+		// 	const ee = { ...e, c: 'c' };
+		// 	expect(ee).toEqual({ ...basic, c: 'c' });
+		// 	expect(ee.stack.length).toBeGreaterThan(0);
+		// });
+
+		it('with .extend() prototype method', () => {
+			const e = nError({ message: 'some message' });
+			const ee = e.extend({ next: 'TEST' });
+			expect(ee).toBe(e);
+			expect(ee.stack.length).toBeGreaterThan(0);
+			expect(ee).toMatchSnapshot();
+		});
+
+		it('with .remove() prototype method', () => {
+			const e = nError({
+				message: 'some message',
+				type: 'SOME_TYPE',
+			});
+			const ee = e.remove('type');
+			expect(ee).toBe(e);
+			expect(ee.stack.length).toBeGreaterThan(0);
+			expect(ee.type).toBeUndefined();
+			expect(ee).toMatchSnapshot();
+		});
+	});
+
+	describe('function has methods as nError creator', () => {
+		it('of status named after error type in camelCase', () => {
 			const e = nError.notFound({ message: 'some error message' });
 			expect(e.status).toBe(404);
 			expect(e).toMatchSnapshot();
@@ -51,48 +72,5 @@ describe('nError', () => {
 			const methods = Object.keys(nError);
 			expect(methods).toHaveLength(Object.keys(ERROR_STATUS_TEXT_MAP).length);
 		});
-	});
-
-	describe('create NError', () => {
-		it('create an Error with extended fields correctly', () => {
-			const e = nError({ message: 'some message', foo: 'bar' });
-			assertError(e);
-		});
-
-		it('create an ExtendedError with extend()', () => {
-			const e = nError({ message: 'some message' });
-			e.extend({ next: 'TEST' });
-			expect(e.next).toBe('TEST');
-		});
-
-		it('create an ExtendedError with remove()', () => {
-			const e = nError({ message: 'some message', test: 'test' });
-			e.remove('test');
-			expect(e.test).toBeUndefined();
-		});
-
-		it('create an ExtendedError with toUser()', () => {
-			const e = nError({ message: 'some message' });
-			e.toUser({ message: 'some other message' });
-			expect(e.user).toEqual({ message: 'some other message' });
-		});
-
-		it('create an ExtendedError with setHandler()', () => {
-			const e = nError({ message: 'some message' });
-			e.setHandler('REDIRECT_TO_INDEX');
-			expect(e.handler).toBe('REDIRECT_TO_INDEX');
-		});
-
-		it('maintains native Error fields with Object.assign()', () => {
-			const e = nError({ message: 'some message' });
-			const ee = Object.assign(e, { action: 'SOME_ACTION' });
-			expect(ee.message).toBe('some message');
-		});
-
-		// it('maintains native Error fields with rest spread', () => {
-		// 	const e = new NError({ message: 'some message' });
-		// 	const ee = new NError({ ...e, action: 'SOME_ACTION_TYPE' });
-		// 	expect(ee.message).toBe('some message');
-		// });
 	});
 });

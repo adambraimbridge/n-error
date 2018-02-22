@@ -1,99 +1,71 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`parseFetchError format isomorphic-fetch response error correctly 1`] = `
-Object {
+NError {
   "category": "FETCH_RESPONSE_ERROR",
   "contentType": "text/plain; charset=utf-8",
-  "extend": [Function],
   "message": "403 Forbidden",
-  "remove": [Function],
-  "setHandler": [Function],
   "status": 403,
-  "toUser": [Function],
 }
 `;
 
 exports[`parseFetchError format network error correctly 1`] = `
-Object {
+NError {
   "category": "FETCH_NETWORK_ERROR",
   "code": "MOCKED_FETCH_NETWORK_ERROR_CODE",
-  "extend": [Function],
   "message": "mocked fetch network error",
-  "remove": [Function],
-  "setHandler": [Function],
-  "toUser": [Function],
 }
 `;
 
 exports[`parseFetchError format node-fetch response error correctly 1`] = `
-Object {
+NError {
   "category": "FETCH_RESPONSE_ERROR",
   "contentType": "text/plain; charset=utf-8",
-  "extend": [Function],
   "message": "403 Forbidden",
-  "remove": [Function],
-  "setHandler": [Function],
   "status": 403,
-  "toUser": [Function],
 }
 `;
 
 exports[`parseFetchNetworkError format network error correctly 1`] = `
-Object {
+NError {
   "category": "FETCH_NETWORK_ERROR",
   "code": "MOCKED_FETCH_NETWORK_ERROR_CODE",
-  "extend": [Function],
   "message": "mocked fetch network error",
-  "remove": [Function],
-  "setHandler": [Function],
-  "toUser": [Function],
 }
 `;
 
 exports[`parseFetchResponseError format error in application/json contentType correctly 1`] = `
-Object {
+NError {
   "category": "FETCH_RESPONSE_ERROR",
   "contentType": "application/json; charset=utf-8",
-  "extend": [Function],
   "message": Object {
     "document": "some url",
     "message": "some message",
   },
-  "remove": [Function],
-  "setHandler": [Function],
   "status": 404,
-  "toUser": [Function],
 }
 `;
 
 exports[`parseFetchResponseError format error in text/html contentType correctly 1`] = `
-Object {
+NError {
   "category": "FETCH_RESPONSE_ERROR",
   "contentType": "text/html; charset=utf-8",
-  "extend": [Function],
   "message": "<html></html>",
-  "remove": [Function],
-  "setHandler": [Function],
   "status": 404,
-  "toUser": [Function],
 }
 `;
 
 exports[`parseFetchResponseError format error in text/plain contentType correctly 1`] = `
-Object {
+NError {
   "category": "FETCH_RESPONSE_ERROR",
   "contentType": "text/plain; charset=utf-8",
-  "extend": [Function],
   "message": "403 Forbidden",
-  "remove": [Function],
-  "setHandler": [Function],
   "status": 403,
-  "toUser": [Function],
 }
 `;
 
 exports[`parseFetchResponseError reports wrong response being threw to catch if response is ok 1`] = `
-Object {
+NError {
   "category": "FETCH_RESPONSE_OK",
   "message": "it shouldn't be caught as exception, please check the code",
   "status": 200,

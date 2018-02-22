@@ -1,14 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`nError create NError create an Error with extended fields correctly 1`] = `
-Object {
-  "extend": [Function],
-  "foo": "bar",
-  "message": "some message",
-  "remove": [Function],
-  "setHandler": [Function],
-  "toUser": [Function],
+exports[`nError function has methods as nError creator of status named after error type in camelCase 1`] = `
+NError {
+  "message": "some error message",
+  "status": 404,
 }
 `;
 
-exports[`nError has methods to create error with status named after error type in camelCase 1`] = `[Error: some error message]`;
+exports[`nError is a constructor function creates nError instance exposes all fileds including .stack in Object.assign 1`] = `
+NError {
+  "a": "a",
+  "b": "b",
+  "c": "c",
+  "message": "test",
+}
+`;
+
+exports[`nError is a constructor function creates nError instance with .extend() prototype method 1`] = `
+NError {
+  "message": "some message",
+  "next": "TEST",
+}
+`;
+
+exports[`nError is a constructor function creates nError instance with .remove() prototype method 1`] = `
+NError {
+  "message": "some message",
+}
+`;
+
+exports[`nError is a constructor function creates nError instance with .stack to trace the callStack 1`] = `
+NError {
+  "message": "some message",
+  "type": "SOME_TYPE",
+}
+`;

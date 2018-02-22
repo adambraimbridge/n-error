@@ -7,11 +7,11 @@ import { CATEGORIES } from './constants';
 // https://msdn.microsoft.com/en-us/library/ms526971(v=exchg.10).aspx
 export const parseFetchResponseError = async response => {
 	if (response.ok) {
-		return {
+		return nError({
 			category: CATEGORIES.FETCH_RESPONSE_OK,
 			status: response.status,
 			message: "it shouldn't be caught as exception, please check the code",
-		};
+		});
 	}
 
 	const { status, headers } = response;

@@ -1,24 +1,34 @@
-export const assertError = e => {
-	expect(e instanceof Error).toBe(true);
-	const { message, stack, ...custom } = e;
-	expect(stack).toBeDefined();
-	expect({ message, ...custom }).toMatchSnapshot();
-};
-
 export const removeObjectKeys = obj => keys => {
-	let output = {};
+	const output = obj;
 	if (Array.isArray(keys)) {
 		Object.keys(obj).forEach(key => {
-			const toBeRemoved = keys.includes(key);
-			if (!toBeRemoved) {
-				output[key] = obj[key];
+			if (keys.includes(key)) {
+				delete output[key];
 			}
 		});
+		// if (obj instanceof Error) {
+		// 	['message', 'stack', 'code'].forEach(key => {
+		// 		if (keys.includes(key)) {
+		// 			Object.assign(obj, { [key]: undefined });
+		// 		}
+		// 	});
+		// }
+		return output;
 	} else if (typeof keys === 'string' && keys !== '') {
-		output = obj;
-		delete output[keys];
-	} else {
-		throw Error('keys need to be formatted in [string] or non-empty string');
+		const k = keys;
+		Object.keys(obj).forEach(key => {
+			if (key === k) {
+				delete output[key];
+			}
+		});
+		// if (obj instanceof Error && ['message', 'stack', 'code'].includes(k)) {
+		// 	Object.assign(output, { [k]: undefined });
+		// }
+		return output;
 	}
-	return output;
+	throw Error('keys need to be formatted in [string] or non-empty string');
+};
+
+export default {
+	removeObjectKeys,
 };

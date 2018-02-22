@@ -22,56 +22,32 @@ export const ERROR_STATUS_TEXT_MAP = {
 	'504': 'GATEWAY_TIMEOUT',
 };
 
-export class NError extends Error {
-	constructor(fields) {
-		super(fields.message);
-		Object.keys(fields).forEach(key => {
-			this[key] = fields[key];
-		});
-
-		this.extend = input => {
-			Object.keys(input).forEach(key => {
-				this[key] = input[key];
-			});
-		};
-
-		this.remove = input => {
-			removeObjectKeys(this)(input);
-		};
-
-		this.toUser = input => {
-			this.user = input;
-		};
-
-		this.setHandler = input => {
-			this.handler = input;
-		};
+// TODO: .stack rest spread support from babel
+export function NError(fields) {
+	if (!(this instanceof NError)) {
+		return new NError(fields);
 	}
+	Object.keys(fields).forEach(key => {
+		this[key] = fields[key];
+	});
+	Error.captureStackTrace(this, NError);
+	return this;
 }
 
-const nError = fields => new NError(fields);
-
-// TODO: .stack rest spread support from babel
-// export function LoggerStandardError(fields) {
-// 	if (!(this instanceof LoggerStandardError)) {
-// 		return new LoggerStandardError(fields);
-// 	}
-// 	Object.keys(fields).forEach(key => {
-// 		this[key] = fields[key];
-// 	});
-// 	Error.captureStackTrace(this, LoggerStandardError);
-// 	return this;
-// }
-
-// LoggerStandardError.prototype = Error.prototype;
+NError.prototype.extend = function extend(input) {
+	return Object.assign(this, input);
+};
+NError.prototype.remove = function remove(input) {
+	return removeObjectKeys(this)(input);
+};
 
 Object.keys(ERROR_STATUS_TEXT_MAP).forEach(status => {
 	const methodName = camelcase(ERROR_STATUS_TEXT_MAP[status]);
-	nError[methodName] = meta =>
-		nError({
+	NError[methodName] = meta =>
+		NError({
 			status: Number(status),
 			...meta,
 		});
 });
 
-export default nError;
+export default NError;

@@ -5,7 +5,6 @@ import {
 	parseFetchError,
 } from '../parser';
 import { CATEGORIES } from '../constants';
-import { assertError } from '../utils';
 
 describe('parseFetchResponseError', () => {
 	it('reports wrong response being threw to catch if response is ok', async () => {
@@ -23,8 +22,7 @@ describe('parseFetchResponseError', () => {
 		const message = '<html></html>';
 		const e = new Response(message, { status: 404, headers });
 		const parsed = await parseFetchResponseError(e);
-		expect(parsed.message).toBe(message);
-		assertError(parsed);
+		expect(parsed).toMatchSnapshot();
 	});
 
 	it('format error in text/plain contentType correctly', async () => {
@@ -33,8 +31,7 @@ describe('parseFetchResponseError', () => {
 		const message = '403 Forbidden';
 		const e = new Response(message, { status: 403, headers });
 		const parsed = await parseFetchResponseError(e);
-		expect(parsed.message).toBe(message);
-		assertError(parsed);
+		expect(parsed).toMatchSnapshot();
 	});
 
 	it('format error in application/json contentType correctly', async () => {
@@ -43,8 +40,7 @@ describe('parseFetchResponseError', () => {
 		const message = { message: 'some message', document: 'some url' };
 		const e = new Response(JSON.stringify(message), { status: 404, headers });
 		const parsed = await parseFetchResponseError(e);
-		expect(parsed.message).toEqual(message);
-		assertError(parsed);
+		expect(parsed).toMatchSnapshot();
 	});
 });
 
@@ -53,8 +49,7 @@ describe('parseFetchNetworkError', () => {
 		const e = new fetch.FetchError('mocked fetch network error');
 		e.code = 'MOCKED_FETCH_NETWORK_ERROR_CODE';
 		const parsed = parseFetchNetworkError(e);
-		expect(parsed.category).toBe(CATEGORIES.FETCH_NETWORK_ERROR);
-		assertError(parsed);
+		expect(parsed).toMatchSnapshot();
 	});
 });
 
@@ -64,8 +59,7 @@ describe('parseFetchError', () => {
 		headers.append('content-type', 'text/plain; charset=utf-8');
 		const e = new fetch.Response('403 Forbidden', { status: 403, headers });
 		const parsed = await parseFetchError(e);
-		expect(parsed.category).toBe(CATEGORIES.FETCH_RESPONSE_ERROR);
-		assertError(parsed);
+		expect(parsed).toMatchSnapshot();
 	});
 
 	it('format isomorphic-fetch response error correctly', async () => {
@@ -73,16 +67,14 @@ describe('parseFetchError', () => {
 		headers.append('content-type', 'text/plain; charset=utf-8');
 		const e = new Response('403 Forbidden', { status: 403, headers });
 		const parsed = await parseFetchError(e);
-		expect(parsed.category).toBe(CATEGORIES.FETCH_RESPONSE_ERROR);
-		assertError(parsed);
+		expect(parsed).toMatchSnapshot();
 	});
 
 	it('format network error correctly', async () => {
 		const e = new fetch.FetchError('mocked fetch network error');
 		e.code = 'MOCKED_FETCH_NETWORK_ERROR_CODE';
 		const parsed = await parseFetchError(e);
-		expect(parsed.category).toBe(CATEGORIES.FETCH_NETWORK_ERROR);
-		assertError(parsed);
+		expect(parsed).toMatchSnapshot();
 	});
 
 	it('does nothing on other error types e.g. System Error ', async () => {

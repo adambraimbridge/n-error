@@ -58,6 +58,8 @@ throw e.extend({ action: 'SOME_ACTION' }).remove('message');
 
 > Error or other objects would be thrown as it is
 
+> parseFetchError() returns a `Promise`, recommended to use `await`
+
 ```js
 /* api-service */
 import { parseFetchError } from '@financial-times/n-error';
@@ -65,7 +67,7 @@ import { parseFetchError } from '@financial-times/n-error';
 try{
   await fetch(url, options);
 } catch (e) {
-  throw parseFetchError(e);
+  throw await parseFetchError(e); // important to use `await` 
 }
 ```
 ```js

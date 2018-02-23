@@ -1,65 +1,63 @@
 # n-error [![npm version](https://badge.fury.io/js/%40financial-times%2Fn-error.svg)](https://badge.fury.io/js/%40financial-times%2Fn-error) [![CircleCI](https://circleci.com/gh/Financial-Times/n-error.svg?style=shield)](https://circleci.com/gh/Financial-Times/workflows/n-error) [![Coverage Status](https://coveralls.io/repos/github/Financial-Times/n-error/badge.svg?branch=master)](https://coveralls.io/github/Financial-Times/n-error?branch=master) [![Dependencies](https://david-dm.org/Financial-Times/n-error.svg)](https://david-dm.org/Financial-Times/n-error) [![Known Vulnerabilities](https://snyk.io/test/github/Financial-Times/n-error/badge.svg)](https://snyk.io/test/github/Financial-Times/n-error)
 
-standardise custom Error object and error handling, logger compliant
+standardised error creation to enhance error handling, error logging and analysis
 
-- [creator](#creator)
-- [error handling patterns](#error-handling-patterns)
-  * [error categories](#error-categories)
-  * [fetch error parser](#fetch-error-parser)
-  * [error handling](#error-handling)
+* [quickstart](#quickstart)
+* [install](#install)
+* [usage](#usage)
+  + [constructor](#constructor)
+  + [manipulation](#manipulation)
+  + [parse fetch error](#parse-fetch-error)
+* [patterns](#patterns)
+  + [error sources](#error-sources)
+  + [descriptitive error objects](#descriptitive-error-objects)
+  + [universal error handler](#universal-error-handler)
 
-## creator
+## quickstart
 ```js
 import nError from '@financial-times/n-error';
-
-throw nError.notFound({ message: 'sessionId not found' });
+```
+```js
+throw nError({ status: 404, message: 'sessionId not found', type: 'AUTH_FAILURE });
+throw nError.notFound({ message: 'sessionId not found', type: 'AUTH_FAILURE' });
 ```
 ```js
 catch (e) {
   throw e.extend({
-    type: 'SOME_ERROR_TYPE',
-    user: { status: 403, message: 'You need to login.' },
-    next: 'REDIRECT_TO_INDEX',
+    action: 'REDIRECT_TO_INDEX',
+    user: { message: 'Authentification Failed' },
   }).remove('message');
 }
 ```
-```js
-catch (e) {
-  throw Object.assign(e, { 
-    type: 'SOME_ERROR_TYPE',
-    user: { status: 403, message: 'You need to login.' },
-    next: 'REDIRECT_TO_INDEX',
-    message: undefined,
-  });
-}
+
+## install
+```shell
+npm install @financial-times/n-error
 ```
 
-## error handling patterns
+## usage
 
-### error categories
-* fetch response error (from API)
-* fetch network error
-* custom Error (threw by code intentionally)
-* node Error (threw by Node)
-
+### constructor
 ```js
-import { CATEGORIES } from '@financial-times/n-error';
+import nError from '@financial-times/n-error';
+
+const e = nError({ status: 404 });
+console.log(e instanceof nError);
+console.log(e.stack);  // built-in .stack for stack tracing like Error
 ```
+> true
+
+### manipulation
+use `.extend()` and `.remove()` to maintain the stack trace of the error
 ```js
-export const CATEGORIES = {
-	FETCH_RESPONSE_OK: 'FETCH_RESPONSE_OK',
-	FETCH_RESPONSE_ERROR: 'FETCH_RESPONSE_ERROR',
-	FETCH_NETWORK_ERROR: 'FETCH_NETWORK_ERROR',
-	NODE_SYSTEM_ERROR: 'NODE_SYSTEM_ERROR',
-	CUSTOM_ERROR: 'CUSTOM_ERROR',
-};
+throw e.extend({ action: 'SOME_ACTION' }).remove('message');
 ```
 
+### parse fetch error
+> parse fetch error into NError object with Category for further error handling
 
-### fetch error parser
-> parse fetch error into NError object with Category label for further error handling
+> Error or other objects would be thrown as it is
 
-> node Error or custom Error would be thrown as it is
 ```js
 /* api-service */
 import { parseFetchError } from '@financial-times/n-error';
@@ -71,26 +69,52 @@ try{
 }
 ```
 ```js
+/* controller/middleware */
+import { CATEGORIES } from '@financial-times/n-error';
+
 try {
   await APIService.call();
 } catch (e) {
-  event.failure(e);
-  if(e.catogary === 'FETCH_NETWORK_ERROR'){
-    const ee = e.toUser({
-      user: { status: 500, message: e.message }
-    })
-    return next(ee)
+  // handle the error differently in case of network errors
+  if(e.catogary === CATEGORIES.FETCH_NETWORK_ERROR){
+    return next(e.extend({
+      user: { message: `network error: ${e.code}` }
+    }));
+  }
+  // handle fetch response error in grace 
+  // parsed message according to content-type
+  // stop `e.json() is not a function` error
+  if(e.category === CATEGORIES.FETCH_RESPONSE_ERROR){
+    const { errorCodes } = e.message;
   }
   return next(e);
 }
 ```
 
-### error handling
+## patterns
+
+### error sources
+* fetch response error
+* fetch network error
+* Error object
+* other custom Error object
+
+### descriptitive error objects
 ```js
-function(e, req, res, next){
-    if(e.next && e.next === 'REDIRECT_TO_ORIGINAL'){
-      return res.redirect(303, `${req.originalUrl}?${query}}`);
-    }
-    //...
+const e = NError({
+  status: 404,
+  message: 'some type of message', // message from server to be logged
+  action: 'REDIRECT_TO_INDEX', // describe error handling behaviour
+  user: { message: 'Authentification Failed' } // override the default message from the server for UI
+});
+```
+
+### universal error handler
+```js
+function(e, req, res, next) {
+  if(e.next && e.next === 'REDIRECT_TO_ORIGINAL'){
+    return res.redirect(303, `${req.originalUrl}?${query}}`);
+  }
+  return res.render('errors', message: e.user.message || e.message );
 }
 ```

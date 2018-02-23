@@ -1,6 +1,7 @@
 # n-error [![npm version](https://badge.fury.io/js/%40financial-times%2Fn-error.svg)](https://badge.fury.io/js/%40financial-times%2Fn-error) [![CircleCI](https://circleci.com/gh/Financial-Times/n-error.svg?style=shield)](https://circleci.com/gh/Financial-Times/workflows/n-error) [![Coverage Status](https://coveralls.io/repos/github/Financial-Times/n-error/badge.svg?branch=master)](https://coveralls.io/github/Financial-Times/n-error?branch=master) [![Dependencies](https://david-dm.org/Financial-Times/n-error.svg)](https://david-dm.org/Financial-Times/n-error) [![Known Vulnerabilities](https://snyk.io/test/github/Financial-Times/n-error/badge.svg)](https://snyk.io/test/github/Financial-Times/n-error)
 
-standardised error creation to enhance error handling, error logging and analysis
+standardised error creation to be user, dev, logger friendly
+descriptitive error for handling, logging and analysis
 
 * [quickstart](#quickstart)
 * [install](#install)

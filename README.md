@@ -18,7 +18,7 @@ standardised error creation to enhance error handling, error logging and analysi
 import nError from '@financial-times/n-error';
 ```
 ```js
-throw nError({ status: 404, message: 'sessionId not found', type: 'AUTH_FAILURE });
+throw nError({ status: 404, message: 'sessionId not found', type: 'AUTH_FAILURE' });
 throw nError.notFound({ message: 'sessionId not found', type: 'AUTH_FAILURE' });
 ```
 ```js

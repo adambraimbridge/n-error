@@ -43,13 +43,11 @@ npm install @financial-times/n-error
 import nError from '@financial-times/n-error';
 
 const e = nError({ status: 404 });
-console.log(e instanceof nError);
+console.log(e instanceof nError); // true
 console.log(e.stack);  // built-in .stack for stack tracing like Error
 ```
-> true
-
 ### manipulation
-use `.extend()` and `.remove()` to maintain the stack trace of the error
+use `.extend()` and `.remove()` to create new copy of the error that maintains the stack trace if you want the manipulation to be pure to avoid unclear behaviour, e.g. async failure logger attached on a lower level 
 ```js
 throw e.extend({ action: 'SOME_ACTION' }).remove('message');
 ```
@@ -68,7 +66,7 @@ import { parseFetchError } from '@financial-times/n-error';
 try{
   await fetch(url, options);
 } catch (e) {
-  throw await parseFetchError(e); // important to use `await` 
+  throw await parseFetchError(e); // use `await`
 }
 ```
 ```js

@@ -37,7 +37,7 @@ describe('nError', () => {
 			const e = nError({ message: 'some message' });
 			const ee = e.extend({ next: 'TEST' });
 			expect(ee).not.toBe(e);
-			expect(ee.stack).toBe(e.stack);
+			expect(ee.stack).toEqual(e.stack);
 			expect(ee.stack.length).toBeGreaterThan(0);
 			expect(ee).toMatchSnapshot();
 		});
@@ -49,7 +49,7 @@ describe('nError', () => {
 			});
 			const ee = e.remove('type');
 			expect(ee).not.toBe(e);
-			expect(ee.stack).toBe(e.stack);
+			expect(ee.stack).toEqual(e.stack);
 			expect(ee).toMatchSnapshot();
 		});
 	});

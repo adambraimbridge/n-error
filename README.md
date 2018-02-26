@@ -13,6 +13,7 @@ standardised error creation to be user, dev, logger friendly
   + [error sources](#error-sources)
   + [descriptitive error objects](#descriptitive-error-objects)
   + [universal error handler](#universal-error-handler)
+  + [reserved fields](#reserved-fields)
 
 ## quickstart
 ```js
@@ -105,7 +106,7 @@ try {
 const e = NError({
   status: 404,
   message: 'some type of message', // message from server to be logged
-  action: 'REDIRECT_TO_INDEX', // describe error handling behaviour
+  handler: 'REDIRECT_TO_INDEX', // describe error handling behaviour
   user: { message: 'Authentification Failed' } // override the default message from the server for UI
 });
 ```
@@ -113,9 +114,12 @@ const e = NError({
 ### universal error handler
 ```js
 function(e, req, res, next) {
-  if(e.next && e.next === 'REDIRECT_TO_ORIGINAL'){
+  if(e.handler && e.handler === 'REDIRECT_TO_ORIGINAL'){
     return res.redirect(303, `${req.originalUrl}?${query}}`);
   }
   return res.render('errors', message: e.user.message || e.message );
 }
 ```
+
+### reserved fields
+> `category` and `action` (if you use [n-auto-logger](//github.com/financial-times/n-auto-logger)) are reserved fields that can be overriden, be cautious if you really want to override the default.

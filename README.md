@@ -122,4 +122,4 @@ function(e, req, res, next) {
 ```
 
 ### reserved fields
-> `category` and `action` (if you use [n-auto-logger](//github.com/financial-times/n-auto-logger)) are reserved fields that can be overriden, be cautious if you really want to override the default.
+`category` and `action` (if you use [n-auto-logger](//github.com/financial-times/n-auto-logger)) are reserved fields that can be overriden, be cautious if you really want to override the default.

@@ -21,9 +21,9 @@ export const parseFetchResponseError = async response => {
 	const message = await response[parseMethod](); // system Error would be thrown if it fails
 	return nError({
 		category: CATEGORIES.FETCH_RESPONSE_ERROR,
-		contentType,
 		status,
 		message,
+		contentType,
 	});
 };
 

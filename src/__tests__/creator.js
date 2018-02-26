@@ -20,7 +20,6 @@ describe('nError', () => {
 				type: 'SOME_TYPE',
 			});
 			expect(e instanceof nError).toBe(true);
-			// expect(e instanceof Error).toBe(true);
 			expect(e.stack.length).toBeGreaterThan(0);
 			expect(e).toMatchSnapshot();
 		});
@@ -29,34 +28,28 @@ describe('nError', () => {
 			const e = nError({ message: 'test', a: 'a', b: 'b' });
 			const ee = Object.assign(e, { c: 'c' });
 			expect(ee.stack.length).toBeGreaterThan(0);
+			expect(ee.stack).toBe(e.stack);
+			expect(ee instanceof nError).toBe(true);
 			expect(ee).toMatchSnapshot();
 		});
 
-		// it('exposes all fileds including stack in rest spread', () => {
-		// 	const basic = { message: 'test', a: 'a', b: 'b' };
-		// 	const e = nError(basic);
-		// 	const ee = { ...e, c: 'c' };
-		// 	expect(ee).toEqual({ ...basic, c: 'c' });
-		// 	expect(ee.stack.length).toBeGreaterThan(0);
-		// });
-
-		it('with .extend() prototype method', () => {
+		it('with .extend() prototype method that creates new instance and maintains the stack', () => {
 			const e = nError({ message: 'some message' });
 			const ee = e.extend({ next: 'TEST' });
-			expect(ee).toBe(e);
+			expect(ee).not.toBe(e);
+			expect(ee.stack).toBe(e.stack);
 			expect(ee.stack.length).toBeGreaterThan(0);
 			expect(ee).toMatchSnapshot();
 		});
 
-		it('with .remove() prototype method', () => {
+		it('with .remove() prototype method that creates new instance and maintains the stack', () => {
 			const e = nError({
 				message: 'some message',
 				type: 'SOME_TYPE',
 			});
 			const ee = e.remove('type');
-			expect(ee).toBe(e);
-			expect(ee.stack.length).toBeGreaterThan(0);
-			expect(ee.type).toBeUndefined();
+			expect(ee).not.toBe(e);
+			expect(ee.stack).toBe(e.stack);
 			expect(ee).toMatchSnapshot();
 		});
 	});

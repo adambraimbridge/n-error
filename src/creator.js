@@ -22,7 +22,6 @@ export const ERROR_STATUS_TEXT_MAP = {
 	'504': 'GATEWAY_TIMEOUT',
 };
 
-// TODO: .stack rest spread support from babel
 export function NError(fields) {
 	if (!(this instanceof NError)) {
 		return new NError(fields);
@@ -35,8 +34,10 @@ export function NError(fields) {
 }
 
 NError.prototype.extend = function extend(input) {
-	return Object.assign(this, input);
+	const output = Object.create(this);
+	return Object.assign(output, this, input);
 };
+
 NError.prototype.remove = function remove(input) {
 	return removeObjectKeys(this)(input);
 };

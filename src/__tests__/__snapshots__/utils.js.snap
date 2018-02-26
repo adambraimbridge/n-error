@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`removeObjectKeys mutates the original input object non-empty string input 1`] = `
+exports[`removeObjectKeys creates new instance and not mutate the original non-empty string input 1`] = `
 Test {
   "type": "SOME_TYPE",
 }
 `;
 
-exports[`removeObjectKeys mutates the original input object with [string] input 1`] = `
+exports[`removeObjectKeys creates new instance and not mutate the original with [string] input 1`] = `
 Test {
   "type": "SOME_TYPE",
 }

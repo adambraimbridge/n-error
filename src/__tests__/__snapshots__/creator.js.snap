@@ -16,14 +16,14 @@ NError {
 }
 `;
 
-exports[`nError is a constructor function creates nError instance with .extend() prototype method 1`] = `
+exports[`nError is a constructor function creates nError instance with .extend() prototype method that creates new instance and maintains the stack 1`] = `
 NError {
   "message": "some message",
   "next": "TEST",
 }
 `;
 
-exports[`nError is a constructor function creates nError instance with .remove() prototype method 1`] = `
+exports[`nError is a constructor function creates nError instance with .remove() prototype method that creates new instance and maintains the stack 1`] = `
 NError {
   "message": "some message",
 }

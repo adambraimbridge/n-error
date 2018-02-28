@@ -88,6 +88,9 @@ try {
   // stop `e.json() is not a function` error
   if(e.category === CATEGORIES.FETCH_RESPONSE_ERROR){
     const { errorCodes } = e.message;
+    return next(e.extend({
+      user: { message: errorCodesToUserMessage(errorCodes) }
+    }));
   }
   return next(e);
 }

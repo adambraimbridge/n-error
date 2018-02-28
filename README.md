@@ -26,7 +26,7 @@ throw nError.notFound({ message: 'sessionId not found', type: 'AUTH_FAILURE' });
 ```js
 catch (e) {
   throw e.extend({
-    action: 'REDIRECT_TO_INDEX',
+    handler: 'REDIRECT_TO_INDEX',
     user: { message: 'Authentification Failed' },
   }).remove('message');
 }
@@ -50,7 +50,7 @@ console.log(e.stack);  // built-in .stack for stack tracing like Error
 ### manipulation
 use `.extend()` and `.remove()` to create new copy of the error that maintains the stack trace if you want the manipulation to be pure to avoid unclear behaviour, e.g. async failure logger attached on a lower level 
 ```js
-throw e.extend({ action: 'SOME_ACTION' }).remove('message');
+throw e.extend({ handler: 'SOME_ACTION' }).remove('message');
 ```
 
 ### parse fetch error
@@ -122,4 +122,4 @@ function(e, req, res, next) {
 ```
 
 ### reserved fields
-`operation`, `action` and `category`  (if you use [n-auto-logger](//github.com/financial-times/n-auto-logger)) are reserved fields that can be overriden, be cautious if you really want to override the default.
+`operation`, `action` and `category` (if you use [n-auto-logger](//github.com/financial-times/n-auto-logger)) are reserved fields that can be overriden, be cautious if you really want to override the default. `handler` is recommended to specify the error handler behaviour, which would be filtered by `n-auto-logger`.

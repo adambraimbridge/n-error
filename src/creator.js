@@ -1,6 +1,6 @@
 import camelcase from 'camelcase';
 
-import { removeObjectKeys } from './utils';
+import { removeObjectKeys } from '@financial-times/n-utils';
 
 // http://www.restapitutorial.com/httpstatuscodes.html
 // implement popular HTTP status code

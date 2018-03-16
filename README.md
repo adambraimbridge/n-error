@@ -116,7 +116,8 @@ const e = NError({
 
 ### universal error handler
 ```js
-function(e, req, res, next) {
+function(err, req, res, next) {
+  const e = Object.assign({}, err); // to avoid mutate input via res.render
   if(e.handler && e.handler === 'REDIRECT_TO_ORIGINAL'){
     return res.redirect(303, `${req.originalUrl}?${query}}`);
   }

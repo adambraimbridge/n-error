@@ -4,11 +4,11 @@ import nError, { parseFetchError, isFetchError } from '../../dist';
 import { ERROR_STATUS_TEXT_MAP } from '../creator';
 
 /* eslint-disable jest/no-disabled-tests */
-const onlyWhenRelease = (name, _test) =>
+const release = (name, _test) =>
 	process.env.RELEASE_TEST ? describe(name, _test) : describe.skip(name, _test);
 /* eslint-enable jest/no-disabled-tests */
 
-onlyWhenRelease('nError', () => {
+release('nError', () => {
 	describe('is a constructor function creates nError instance', () => {
 		it('with .stack to trace the callStack', () => {
 			const e = nError({
@@ -64,7 +64,7 @@ onlyWhenRelease('nError', () => {
 	});
 });
 
-onlyWhenRelease('parseFetchError', () => {
+release('parseFetchError', () => {
 	it('format node-fetch response error correctly', async () => {
 		const headers = new fetch.Headers();
 		headers.append('content-type', 'text/plain; charset=utf-8');
@@ -95,7 +95,7 @@ onlyWhenRelease('parseFetchError', () => {
 	});
 });
 
-onlyWhenRelease('isFetchError', () => {
+release('isFetchError', () => {
 	it('checks isomorphic-fetch Response Error correctly', () => {
 		const e = new Response('', { status: 404 });
 		const result = isFetchError(e);

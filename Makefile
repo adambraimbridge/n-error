@@ -7,11 +7,11 @@ node_modules/@financial-times/n-gage/index.mk:
 build: $(shell find src -type f)
 	@echo 'Building…'
 	@rm -rf dist
-	@babel src -d dist --ignore '**/__tests__/*.js'
+	@webpack
 
 unit-test:
 	@echo 'Unit Testing…'
-	@jest
+	@RELEASE_TEST=true jest
 
 unit-test-cover:
 	@jest --coverage

@@ -33,7 +33,7 @@ onlyWhenRelease('nError', () => {
 			const e = nError({ message: 'some message' });
 			const ee = e.extend({ next: 'TEST' });
 			expect(ee).not.toBe(e);
-			expect(ee.stack.toString()).toContain('src/creator.js:');
+			expect(ee.stack.toString()).toContain('src/__tests__/dist.js:');
 			expect(ee.stack.length).toBeGreaterThan(0);
 			expect(ee).toMatchSnapshot();
 		});
@@ -45,7 +45,7 @@ onlyWhenRelease('nError', () => {
 			});
 			const ee = e.remove('type');
 			expect(ee).not.toBe(e);
-			expect(ee.stack.toString()).toContain('src/creator.js:');
+			expect(ee.stack.toString()).toContain('src/__tests__/dist.js:');
 			expect(ee).toMatchSnapshot();
 		});
 	});

@@ -1,7 +1,6 @@
 # n-error 
 
 [![npm version](https://badge.fury.io/js/%40financial-times%2Fn-error.svg)](https://badge.fury.io/js/%40financial-times%2Fn-error)
-![gzip size](http://img.badgesize.io/https://unpkg.com/@financial-times/n-error?compression=gzip)
 ![npm download](https://img.shields.io/npm/dm/@financial-times/n-error.svg)
 ![node version](https://img.shields.io/node/v/@financial-times/n-error.svg)
 

@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-	// mode: 'production',
+	mode: 'production',
 	devtool: 'source-map',
 	target: 'node',
 	entry: './src/index',
@@ -18,10 +18,28 @@ module.exports = {
 		rules: [
 			{
 				test: /\.js?$/,
-				use: 'babel-loader',
 				exclude: '/node_modules/',
+				use: {
+					loader: 'babel-loader',
+					// override options set in .babelrc
+					options: {
+						presets: [
+							[
+								'env',
+								{
+									modules: false,
+									targets: { node: '6.10' },
+								},
+							],
+						],
+						plugins: ['transform-object-rest-spread'],
+					},
+				},
 			},
 		],
+	},
+	optimization: {
+		minimize: false,
 	},
 	plugins: [
 		new webpack.DefinePlugin({

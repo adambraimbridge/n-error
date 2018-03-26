@@ -14,7 +14,7 @@ unit-test:
 	@RELEASE_TEST=true jest
 
 unit-test-cover:
-	@jest --coverage
+	@RELEASE_TEST=true jest --coverage
 
 lint:
 	@echo 'linting…'

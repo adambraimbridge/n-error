@@ -30,6 +30,7 @@ export function NError(fields) {
 		this[key] = fields[key];
 	});
 	Error.captureStackTrace(this, NError);
+	this.constructor.prototype.stack = this.stack;
 	return this;
 }
 

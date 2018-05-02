@@ -127,10 +127,9 @@ const e = NError({
 
 ### universal error handler
 ```js
-function(err, req, res, next) {
-  const e = Object.assign({}, err); // to avoid mutate input via res.render
+function(e, req, res, next) {
   if(e.handler && e.handler === 'REDIRECT_TO_ORIGINAL'){
-    return res.redirect(303, `${req.originalUrl}?${query}}`);
+    return res.redirect(303, req.originalUrl);
   }
   return res.render('errors', message: e.user.message || e.message );
 }

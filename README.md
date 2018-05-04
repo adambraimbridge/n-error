@@ -1,5 +1,8 @@
 # n-error 
 
+a convenient error creator with pure manipulation methods
+> patterns and tools for error parsing, descriptive error creation, and standardised handling
+
 [![npm version](https://badge.fury.io/js/%40financial-times%2Fn-error.svg)](https://badge.fury.io/js/%40financial-times%2Fn-error)
 ![npm download](https://img.shields.io/npm/dm/@financial-times/n-error.svg)
 ![node version](https://img.shields.io/node/v/@financial-times/n-error.svg)
@@ -10,9 +13,6 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Financial-Times/n-error/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Financial-Times/n-error/?branch=master)
 [![Dependencies](https://david-dm.org/Financial-Times/n-error.svg)](https://david-dm.org/Financial-Times/n-error)
 [![devDependencies](https://david-dm.org/Financial-Times/n-error/dev-status.svg)](https://david-dm.org/Financial-Times/n-error?type=dev)
-
-standardised error creation to be user, dev, logger friendly
-> descriptitive error for handling, logging and analysis
 
 * [quickstart](#quickstart)
 * [install](#install)

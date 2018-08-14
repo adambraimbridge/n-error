@@ -1,4 +1,4 @@
-import nError, { parseFetchError, isFetchError } from '../index';
+import nError, { parseFetchError, isFetchError, fetch } from '../index';
 
 describe('nError', () => {
 	it('exported correctly', () => {
@@ -15,5 +15,11 @@ describe('parseFetchError', () => {
 describe('isFetchError', () => {
 	it('exported correctly', () => {
 		expect(typeof isFetchError).toBe('function');
+	});
+});
+
+describe('fetch', () => {
+	it('exported correctly', () => {
+		expect(typeof fetch).toBe('function');
 	});
 });

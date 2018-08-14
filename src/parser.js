@@ -1,5 +1,5 @@
-import { isFetchResponseError, isFetchNetworkError } from './checker';
 import nError from './creator';
+import { isFetchResponseError, isFetchNetworkError } from './checker';
 import { CATEGORIES } from './constants';
 
 // parse the response error based on content-type text/html, text/plain or application/json
